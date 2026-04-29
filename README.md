@@ -29,7 +29,9 @@ _template/       # Blank ADS template to copy for new detections
 
 ### Identity
 
-*Coming soon*
+| Detection | Technique | Data Source |
+|---|---|---|
+| [OAuth Device Code Phishing](detections/identity/oauth-device-code-phishing/oauth-device-code-phishing.md) | T1528, T1566.002 | Entra ID Sign-in Logs |
 
 ### Cloud
 
