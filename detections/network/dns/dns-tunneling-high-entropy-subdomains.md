@@ -18,7 +18,7 @@ Secondary signals: unusually high query volume to a single parent domain, consis
 
 ## Technical Context
 
-**Data source:** Zeek `dns.log`
+**Data source:** Zeek `dns.log` ingested into Splunk (Corelight or Zeek App for Splunk). Sourcetype: `corelight_dns` or `bro_dns`.
 
 **Key fields:**
 - `query` — the full DNS query string; subdomain extraction and entropy calculation are applied here
@@ -28,8 +28,8 @@ Secondary signals: unusually high query volume to a single parent domain, consis
 
 **Environment assumptions:**
 - Zeek is deployed at a network chokepoint with visibility into DNS queries (recursive resolver traffic or mirrored upstream)
-- A Shannon entropy function is available in the SIEM or applied at log ingestion (e.g., via a Zeek script, Elastic ingest pipeline, or SPL `eval`)
-- An internal domain allowlist exists or can be derived from baseline to reduce FP noise on legitimate CDN/cloud subdomains
+- Zeek logs are forwarded to Splunk; the SPL below uses `len()` for subdomain length — entropy scoring requires either a custom SPL command or pre-computed field at ingestion
+- An internal domain lookup or allowlist (e.g., a Splunk lookup table) exists to suppress known-good high-entropy domains (CDNs, cloud providers)
 
 ## Blind Spots
 
@@ -59,18 +59,64 @@ ruby dnscat2.rb --dns "domain=tunnel.lab.local"
 ./dnscat --dns "domain=tunnel.lab.local"
 ```
 
-Expected result in Zeek `dns.log`: queries to `tunnel.lab.local` with long, high-entropy subdomain labels (e.g., `6162636465666768696a6b6c.tunnel.lab.local`), elevated query rate from a single source IP, mix of query types including TXT.
+Expected result in Splunk: events from sourcetype `corelight_dns` or `bro_dns` where the first label of `query` is long and the query type is TXT or NULL, sourced from a single internal host at elevated rate.
 
-**KQL (Elastic / Microsoft Sentinel):**
-```kql
-// Requires entropy field computed at ingestion or via script
-dns.question.name: * 
-  and dns.question.type: ("TXT" or "NULL" or "CNAME")
-  and not dns.question.name: ("*.internal.corp" or "*.windowsupdate.com")
-| where strlen(split(dns.question.name, ".")[0]) > 40
+**SPL (primary):**
+```spl
+sourcetype=corelight_dns OR sourcetype=bro_dns
+| eval subdomain=mvindex(split(query, "."), 0)
+| eval subdomain_len=len(subdomain)
+| where subdomain_len > 40
+    AND (qtype_name="TXT" OR qtype_name="NULL" OR qtype_name="CNAME")
+| eval parent_domain=mvjoin(mvindex(split(query, "."), 1, -1), ".")
+| lookup dns_allowlist.csv domain AS parent_domain OUTPUT is_allowed
+| where isnull(is_allowed) OR is_allowed!="true"
+| stats count, values(query) AS queries, dc(query) AS unique_queries
+    BY _time, id.orig_h, parent_domain
+| where count > 20
+| sort - count
 ```
 
-**Zeek detection script (inline entropy check):**
+> **Note on entropy:** SPL does not have a native Shannon entropy function. Options: (1) compute entropy in a Zeek script and forward it as a field, (2) use a custom SPL command, or (3) use subdomain length as a proxy — imperfect but effective for catching most tooling. Length > 40 characters catches iodine, dnscat2, and DNSExfiltrator default configurations.
+
+**Sigma rule (SIEM-agnostic source of truth):**
+```yaml
+title: DNS Tunneling via High-Entropy Subdomains
+id: a8f3b2c1-4d5e-6f7a-8b9c-0d1e2f3a4b5c
+status: experimental
+description: Detects DNS queries with long subdomain labels indicative of data encoding used in DNS tunneling tools
+references:
+    - https://attack.mitre.org/techniques/T1071/004/
+author: Chris Ray
+date: 2026-04-29
+tags:
+    - attack.command-and-control
+    - attack.t1071.004
+    - attack.exfiltration
+    - attack.t1048
+logsource:
+    category: dns
+product: zeek
+detection:
+    selection:
+        qtype_name:
+            - TXT
+            - NULL
+            - CNAME
+    filter_internal:
+        query|endswith:
+            - '.internal.corp'
+            - '.local'
+    condition: selection and not filter_internal
+falsepositives:
+    - CDN providers with long random subdomains (Akamai, CloudFront)
+    - Software update infrastructure
+level: medium
+```
+
+> The Sigma rule transpiles to SPL via `sigma-cli` with the Splunk backend. The SPL above adds length filtering and volume aggregation that go beyond what Sigma's condition syntax supports — treat the SPL as the production query and the Sigma rule as the portable definition.
+
+**Zeek inline script (sensor-side pre-filter):**
 ```zeek
 event dns_request(c: connection, msg: dns_msg, query: string, qtype: count, qclass: count)
     {
@@ -79,7 +125,6 @@ event dns_request(c: connection, msg: dns_msg, query: string, qtype: count, qcla
         {
         local subdomain = labels[0];
         if ( |subdomain| > 40 )
-            # Emit notice or log for downstream SIEM pickup
             NOTICE([$note=DNS::HighEntropySubdomain,
                     $conn=c,
                     $msg=fmt("Long subdomain in DNS query: %s", query)]);
