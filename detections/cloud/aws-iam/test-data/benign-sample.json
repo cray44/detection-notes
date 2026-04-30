@@ -1,0 +1,76 @@
+[
+  {
+    "_comment": "Benign: Terraform pipeline applying planned IAM changes during business hours — known IaC role, expected activity",
+    "sourcetype": "aws:cloudtrail",
+    "index": "aws",
+    "eventTime": "2026-04-29T14:22:10Z",
+    "eventName": "AttachRolePolicy",
+    "userIdentity": {
+      "type": "AssumedRole",
+      "arn": "arn:aws:sts::123456789012:assumed-role/terraform-deploy-role/terraform-run-12345",
+      "accountId": "123456789012",
+      "sessionContext": {
+        "sessionIssuer": {
+          "type": "Role",
+          "arn": "arn:aws:iam::123456789012:role/terraform-deploy-role"
+        }
+      }
+    },
+    "requestParameters": {
+      "roleName": "new-service-lambda-role",
+      "policyArn": "arn:aws:iam::aws:policy/AdministratorAccess"
+    },
+    "sourceIPAddress": "AWS Internal",
+    "userAgent": "HashiCorp-Terraform/1.5.0",
+    "errorCode": null,
+    "recipientAccountId": "123456789012",
+    "awsRegion": "us-east-1",
+    "_note": "Suppressed by iac_roles.csv lookup — terraform-deploy-role is a known IaC role"
+  },
+  {
+    "_comment": "Benign: authorized security engineer attaching read-only policy to auditor role — expected, business hours, corporate IP",
+    "sourcetype": "aws:cloudtrail",
+    "index": "aws",
+    "eventTime": "2026-04-29T10:05:44Z",
+    "eventName": "AttachRolePolicy",
+    "userIdentity": {
+      "type": "IAMUser",
+      "arn": "arn:aws:iam::123456789012:user/seceng-awilliams",
+      "accountId": "123456789012",
+      "userName": "seceng-awilliams"
+    },
+    "requestParameters": {
+      "roleName": "external-auditor-role",
+      "policyArn": "arn:aws:iam::aws:policy/SecurityAudit"
+    },
+    "sourceIPAddress": "203.0.113.45",
+    "userAgent": "aws-cli/2.13.0 Python/3.11.4",
+    "errorCode": null,
+    "recipientAccountId": "123456789012",
+    "awsRegion": "us-east-1",
+    "_note": "SecurityAudit is in aws_privileged_policies.csv but caller is corporate IP, business hours — triage as authorized"
+  },
+  {
+    "_comment": "Benign: AccessDenied on escalation attempt — attacker tried but was blocked; useful for hunting failed attempts",
+    "sourcetype": "aws:cloudtrail",
+    "index": "aws",
+    "eventTime": "2026-04-29T06:53:31Z",
+    "eventName": "AttachUserPolicy",
+    "userIdentity": {
+      "type": "IAMUser",
+      "arn": "arn:aws:iam::123456789012:user/readonly-svc-account",
+      "accountId": "123456789012",
+      "userName": "readonly-svc-account"
+    },
+    "requestParameters": {
+      "userName": "readonly-svc-account",
+      "policyArn": "arn:aws:iam::aws:policy/AdministratorAccess"
+    },
+    "sourceIPAddress": "45.33.32.156",
+    "userAgent": "aws-cli/2.13.0",
+    "errorCode": "AccessDenied",
+    "recipientAccountId": "123456789012",
+    "awsRegion": "us-east-1",
+    "_note": "errorCode=AccessDenied means escalation failed — filter from primary alert but include in hunt for blocked escalation attempts"
+  }
+]

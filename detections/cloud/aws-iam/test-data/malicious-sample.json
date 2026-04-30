@@ -1,0 +1,73 @@
+[
+  {
+    "_comment": "Malicious: compromised IAM user attaches AdministratorAccess to themselves — Tier 1 hit, non-IaC caller, offhours",
+    "sourcetype": "aws:cloudtrail",
+    "index": "aws",
+    "eventTime": "2026-04-29T02:34:11Z",
+    "eventName": "AttachUserPolicy",
+    "userIdentity": {
+      "type": "IAMUser",
+      "arn": "arn:aws:iam::123456789012:user/developer-jsmith",
+      "accountId": "123456789012",
+      "userName": "developer-jsmith"
+    },
+    "requestParameters": {
+      "userName": "developer-jsmith",
+      "policyArn": "arn:aws:iam::aws:policy/AdministratorAccess"
+    },
+    "sourceIPAddress": "185.220.101.42",
+    "userAgent": "aws-cli/2.13.0 Python/3.11.4",
+    "errorCode": null,
+    "recipientAccountId": "123456789012",
+    "awsRegion": "us-east-1"
+  },
+  {
+    "_comment": "Malicious: attacker injects inline wildcard policy to a role they assumed — Tier 2 hit, Action:* grant",
+    "sourcetype": "aws:cloudtrail",
+    "index": "aws",
+    "eventTime": "2026-04-29T03:01:55Z",
+    "eventName": "PutRolePolicy",
+    "userIdentity": {
+      "type": "AssumedRole",
+      "arn": "arn:aws:sts::123456789012:assumed-role/ec2-instance-role/i-0a1b2c3d4e5f",
+      "accountId": "123456789012",
+      "sessionContext": {
+        "sessionIssuer": {
+          "type": "Role",
+          "arn": "arn:aws:iam::123456789012:role/ec2-instance-role"
+        }
+      }
+    },
+    "requestParameters": {
+      "roleName": "app-deployment-role",
+      "policyName": "temp-access",
+      "policyDocument": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":\"*\",\"Resource\":\"*\"}]}"
+    },
+    "sourceIPAddress": "10.0.1.55",
+    "userAgent": "Boto3/1.28.0 Python/3.10.0",
+    "errorCode": null,
+    "recipientAccountId": "123456789012",
+    "awsRegion": "us-east-1"
+  },
+  {
+    "_comment": "Malicious: Root account attaches IAMFullAccess — automatic critical, Root should never make IAM changes",
+    "sourcetype": "aws:cloudtrail",
+    "index": "aws",
+    "eventTime": "2026-04-29T04:17:22Z",
+    "eventName": "AttachRolePolicy",
+    "userIdentity": {
+      "type": "Root",
+      "arn": "arn:aws:iam::123456789012:root",
+      "accountId": "123456789012"
+    },
+    "requestParameters": {
+      "roleName": "lambda-execution-role",
+      "policyArn": "arn:aws:iam::aws:policy/IAMFullAccess"
+    },
+    "sourceIPAddress": "91.108.56.200",
+    "userAgent": "AWS Internal",
+    "errorCode": null,
+    "recipientAccountId": "123456789012",
+    "awsRegion": "us-east-1"
+  }
+]
