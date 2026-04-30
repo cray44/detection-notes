@@ -31,6 +31,7 @@ Sigma rules are maintained as the portable source of truth in [sigma-to-spl](htt
 | [DNS Tunneling via High-Entropy Subdomains](detections/network/dns/dns-tunneling-high-entropy-subdomains.md) | T1071.004 | APT34 / OilRig | Zeek dns.log |
 | [TLS C2 via JA4 Fingerprint and Certificate Anomalies](detections/network/tls/tls-c2-ja4-certificate-anomalies.md) | T1071.001, T1573.002 | Cobalt Strike / Brute Ratel | Zeek ssl.log |
 | [Statistical Beaconing via Zeek conn.log](detections/network/conn/statistical-beaconing-zeek-conn-log.md) | T1071 | Cobalt Strike / Sliver / Havoc | Zeek conn.log |
+| [SMB Lateral Movement via Admin Share Access](detections/network/smb/smb-lateral-movement-admin-shares.md) | T1021.002 | Conti / BlackCat / Cobalt Strike | Zeek smb_mapping.log |
 
 ### Identity
 
@@ -38,6 +39,7 @@ Sigma rules are maintained as the portable source of truth in [sigma-to-spl](htt
 |---|---|---|---|
 | [OAuth Device Code Phishing](detections/identity/oauth-device-code-phishing/oauth-device-code-phishing.md) | T1528, T1566.002 | APT29 / Midnight Blizzard | Entra ID Sign-in Logs |
 | [Service Principal Credential Addition](detections/identity/entra-id-service-principal-credential-addition/entra-id-service-principal-credential-addition.md) | T1098.001 | APT29 / Scattered Spider | Entra ID Audit Logs |
+| [Kerberoasting via RC4 Encryption Downgrade](detections/identity/kerberoasting-rc4-downgrade/kerberoasting-rc4-downgrade.md) | T1558.003 | APT29 / Conti / eCrime | Windows Security Event 4769 |
 
 ### Cloud
 
