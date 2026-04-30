@@ -30,6 +30,7 @@ Sigma rules are maintained as the portable source of truth in [sigma-to-spl](htt
 |---|---|---|---|
 | [DNS Tunneling via High-Entropy Subdomains](detections/network/dns/dns-tunneling-high-entropy-subdomains.md) | T1071.004 | APT34 / OilRig | Zeek dns.log |
 | [TLS C2 via JA4 Fingerprint and Certificate Anomalies](detections/network/tls/tls-c2-ja4-certificate-anomalies.md) | T1071.001, T1573.002 | Cobalt Strike / Brute Ratel | Zeek ssl.log |
+| [Statistical Beaconing via Zeek conn.log](detections/network/conn/statistical-beaconing-zeek-conn-log.md) | T1071 | Cobalt Strike / Sliver / Havoc | Zeek conn.log |
 
 ### Identity
 
@@ -43,6 +44,7 @@ Sigma rules are maintained as the portable source of truth in [sigma-to-spl](htt
 | Detection | Technique | Threat Actor | Data Source |
 |---|---|---|---|
 | [AWS IAM Privilege Escalation via Policy Attachment](detections/cloud/aws-iam/aws-iam-privilege-escalation-policy-attachment.md) | T1078.004, T1098 | Scattered Spider / LAPSUS$ | AWS CloudTrail |
+| [Azure Illicit OAuth App Consent Grant](detections/cloud/azure-oauth/azure-illicit-oauth-consent-grant.md) | T1528 | APT29 / Midnight Blizzard | Entra ID Audit Logs |
 
 ### Endpoint
 
