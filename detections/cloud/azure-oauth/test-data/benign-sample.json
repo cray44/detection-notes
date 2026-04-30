@@ -1,0 +1,89 @@
+[
+  {
+    "_comment": "Scenario 1: IT admin granting consent to Salesforce (verified publisher, low-risk read-only scopes). risk_score=0 — scopes are openid+profile+User.Read only, no high-risk scopes. Would also be suppressed by trusted_oauth_apps.csv if Salesforce app ID is listed.",
+    "operationName": "Consent to application",
+    "category": "ApplicationManagement",
+    "result": "success",
+    "correlationId": "aabbccdd-9999-8888-7777-000011112222",
+    "callerIpAddress": "10.1.2.3",
+    "tenantId": "aaaabbbb-cccc-dddd-eeee-ffffaaaabbbb",
+    "properties": {
+      "initiatedBy": {
+        "user": {
+          "userPrincipalName": "it-admin@contoso.com",
+          "ipAddress": "10.1.2.3",
+          "id": "deadbeef-aaaa-bbbb-cccc-ddddeeeeffff"
+        }
+      },
+      "targetResources": [
+        {
+          "displayName": "Salesforce",
+          "type": "ServicePrincipal",
+          "appId": "00000003-0000-0ff1-ce00-000000000000"
+        }
+      ],
+      "additionalDetails": [
+        { "key": "IsAdminConsent", "value": "True" },
+        { "key": "Permissions", "value": "openid profile User.Read" }
+      ]
+    }
+  },
+  {
+    "_comment": "Scenario 2: User consenting to Microsoft Planner (Microsoft first-party app, known app ID). Listed in trusted_oauth_apps.csv -> suppressed by lookup. Even if not in lookup: risk_score=0, no high-risk scopes.",
+    "operationName": "Consent to application",
+    "category": "ApplicationManagement",
+    "result": "success",
+    "correlationId": "11223344-5555-6666-7777-8888aabbccdd",
+    "callerIpAddress": "10.5.6.7",
+    "tenantId": "aaaabbbb-cccc-dddd-eeee-ffffaaaabbbb",
+    "properties": {
+      "initiatedBy": {
+        "user": {
+          "userPrincipalName": "jdoe@contoso.com",
+          "ipAddress": "10.5.6.7",
+          "id": "11112222-aaaa-bbbb-cccc-333344445555"
+        }
+      },
+      "targetResources": [
+        {
+          "displayName": "Microsoft Planner",
+          "type": "ServicePrincipal",
+          "appId": "09abbdfd-ed23-4b51-b3bd-b4c5431fa7f5"
+        }
+      ],
+      "additionalDetails": [
+        { "key": "IsAdminConsent", "value": "False" },
+        { "key": "Permissions", "value": "openid profile Tasks.ReadWrite User.Read" }
+      ]
+    }
+  },
+  {
+    "_comment": "Scenario 3: Failed consent attempt (result != success) — filtered out by 'where result=success'. Would only be relevant as a separate low-confidence indicator if volume spikes.",
+    "operationName": "Consent to application",
+    "category": "ApplicationManagement",
+    "result": "failure",
+    "correlationId": "ccddee00-1111-2222-3333-aabbccdd1234",
+    "callerIpAddress": "198.51.100.99",
+    "tenantId": "aaaabbbb-cccc-dddd-eeee-ffffaaaabbbb",
+    "properties": {
+      "initiatedBy": {
+        "user": {
+          "userPrincipalName": "jsmith@contoso.com",
+          "ipAddress": "198.51.100.99",
+          "id": "99998888-7777-6666-5555-444433332222"
+        }
+      },
+      "targetResources": [
+        {
+          "displayName": "Unknown App",
+          "type": "ServicePrincipal",
+          "appId": "ffffffff-eeee-dddd-cccc-bbbbaaaaffff"
+        }
+      ],
+      "additionalDetails": [
+        { "key": "IsAdminConsent", "value": "False" },
+        { "key": "Permissions", "value": "openid Mail.Send offline_access" }
+      ]
+    }
+  }
+]

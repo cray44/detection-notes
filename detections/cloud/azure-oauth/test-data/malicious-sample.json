@@ -1,0 +1,89 @@
+[
+  {
+    "_comment": "Scenario 1: Admin consent grant with Mail.Send + offline_access — APT29-style app impersonating Microsoft Teams Update. risk_score=115 (admin +60, mail_write +40, offline +15) -> HIGH confidence",
+    "operationName": "Consent to application",
+    "category": "ApplicationManagement",
+    "result": "success",
+    "correlationId": "aabbccdd-1234-5678-9abc-def012345678",
+    "callerIpAddress": "198.51.100.55",
+    "tenantId": "aaaabbbb-cccc-dddd-eeee-ffffaaaabbbb",
+    "properties": {
+      "initiatedBy": {
+        "user": {
+          "userPrincipalName": "globaladmin@contoso.com",
+          "ipAddress": "198.51.100.55",
+          "id": "11112222-3333-4444-5555-666677778888"
+        }
+      },
+      "targetResources": [
+        {
+          "displayName": "Microsoft Teams Update Service",
+          "type": "ServicePrincipal",
+          "appId": "deadbeef-0000-1111-2222-333344445555"
+        }
+      ],
+      "additionalDetails": [
+        { "key": "IsAdminConsent", "value": "True" },
+        { "key": "Permissions", "value": "openid profile offline_access Mail.Send Mail.ReadWrite User.Read" }
+      ]
+    }
+  },
+  {
+    "_comment": "Scenario 2: User consent with Mail.Send + offline_access, non-corporate IP — consent phishing link clicked from home. risk_score=55 (mail_write +40, offline +15) -> LOW confidence (surfaced for review)",
+    "operationName": "Consent to application",
+    "category": "ApplicationManagement",
+    "result": "success",
+    "correlationId": "11223344-aaaa-bbbb-cccc-ddeeff001122",
+    "callerIpAddress": "203.0.113.77",
+    "tenantId": "aaaabbbb-cccc-dddd-eeee-ffffaaaabbbb",
+    "properties": {
+      "initiatedBy": {
+        "user": {
+          "userPrincipalName": "jsmith@contoso.com",
+          "ipAddress": "203.0.113.77",
+          "id": "99998888-7777-6666-5555-444433332222"
+        }
+      },
+      "targetResources": [
+        {
+          "displayName": "OneDrive Backup Pro",
+          "type": "ServicePrincipal",
+          "appId": "cafebabe-9999-8888-7777-666655554444"
+        }
+      ],
+      "additionalDetails": [
+        { "key": "IsAdminConsent", "value": "False" },
+        { "key": "Permissions", "value": "openid profile offline_access Mail.Send Mail.Read Files.Read" }
+      ]
+    }
+  },
+  {
+    "_comment": "Scenario 3: Directory write scope via API (Add OAuth2PermissionGrant) — attacker using compromised service principal to grant Application.ReadWrite.All. risk_score=50 (dir_write +50) -> MEDIUM confidence",
+    "operationName": "Add OAuth2PermissionGrant",
+    "category": "ApplicationManagement",
+    "result": "success",
+    "correlationId": "55667788-cccc-dddd-eeee-ff0011223344",
+    "callerIpAddress": "192.0.2.88",
+    "tenantId": "aaaabbbb-cccc-dddd-eeee-ffffaaaabbbb",
+    "properties": {
+      "initiatedBy": {
+        "user": {
+          "userPrincipalName": "svc-automation@contoso.com",
+          "ipAddress": "192.0.2.88",
+          "id": "aaaabbbb-1111-2222-3333-444455556666"
+        }
+      },
+      "targetResources": [
+        {
+          "displayName": "ReconApp2024",
+          "type": "ServicePrincipal",
+          "appId": "b00bface-1234-5678-abcd-ef0123456789"
+        }
+      ],
+      "additionalDetails": [
+        { "key": "IsAdminConsent", "value": "True" },
+        { "key": "Permissions", "value": "openid Application.ReadWrite.All Directory.ReadWrite.All" }
+      ]
+    }
+  }
+]
