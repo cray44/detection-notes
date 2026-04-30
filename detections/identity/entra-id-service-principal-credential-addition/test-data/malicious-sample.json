@@ -1,0 +1,84 @@
+[
+  {
+    "_comment": "APT29-style persistence — interactive user adds password credential to high-privilege SP after business hours",
+    "time": "2026-04-30T01:42:18.334Z",
+    "operationName": "Add service principal credentials",
+    "category": "AuditLogs",
+    "result": "success",
+    "resultDescription": "",
+    "correlationId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "properties": {
+      "activityDisplayName": "Add service principal credentials",
+      "activityDateTime": "2026-04-30T01:42:18.334Z",
+      "initiatedBy": {
+        "user": {
+          "id": "99887766-5544-3322-1100-aabbccddeeff",
+          "displayName": "Liam Turner",
+          "userPrincipalName": "lturner@contoso.com",
+          "ipAddress": "185.220.101.47"
+        }
+      },
+      "targetResources": [
+        {
+          "id": "aabbccdd-1122-3344-5566-778899aabbcc",
+          "displayName": "Contoso-GraphMailReader-Prod",
+          "type": "ServicePrincipal",
+          "modifiedProperties": [
+            {
+              "displayName": "KeyDescription",
+              "newValue": "[{\"CustomKeyIdentifier\":null,\"EndDate\":\"2028-04-30T00:00:00Z\",\"KeyId\":\"deadbeef-dead-beef-dead-beefdeadbeef\",\"StartDate\":\"2026-04-30T01:42:18Z\",\"Type\":\"Password\",\"Usage\":\"Verify\",\"Value\":null,\"DisplayName\":\"backup-key\"}]",
+              "oldValue": "[]"
+            }
+          ]
+        }
+      ],
+      "additionalDetails": [
+        {
+          "key": "CredentialType",
+          "value": "Password"
+        }
+      ]
+    }
+  },
+  {
+    "_comment": "Scattered Spider pattern — interactive user adds certificate credential to SP with Directory.ReadWrite.All during business hours, but initiating account was itself compromised via phishing",
+    "time": "2026-04-30T14:11:55.910Z",
+    "operationName": "Add service principal credentials",
+    "category": "AuditLogs",
+    "result": "success",
+    "resultDescription": "",
+    "correlationId": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+    "properties": {
+      "activityDisplayName": "Add service principal credentials",
+      "activityDateTime": "2026-04-30T14:11:55.910Z",
+      "initiatedBy": {
+        "user": {
+          "id": "11223344-5566-7788-99aa-bbccddeeff00",
+          "displayName": "Emma Nguyen",
+          "userPrincipalName": "anguyen@contoso.com",
+          "ipAddress": "91.108.4.200"
+        }
+      },
+      "targetResources": [
+        {
+          "id": "ccddee11-2233-4455-6677-889900aabbcc",
+          "displayName": "Contoso-DirectorySync-Automation",
+          "type": "ServicePrincipal",
+          "modifiedProperties": [
+            {
+              "displayName": "KeyDescription",
+              "newValue": "[{\"CustomKeyIdentifier\":\"AABBCCDD\",\"EndDate\":\"2029-01-01T00:00:00Z\",\"KeyId\":\"cafebabe-cafe-babe-cafe-babecafebabe\",\"StartDate\":\"2026-04-30T14:11:55Z\",\"Type\":\"AsymmetricX509Cert\",\"Usage\":\"Verify\",\"Value\":null,\"DisplayName\":\"cert-2026\"}]",
+              "oldValue": "[]"
+            }
+          ]
+        }
+      ],
+      "additionalDetails": [
+        {
+          "key": "CredentialType",
+          "value": "AsymmetricX509Cert"
+        }
+      ]
+    }
+  }
+]
