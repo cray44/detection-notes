@@ -1,0 +1,38 @@
+[
+  {
+    "_comment": "Scenario 1: Machine account RC4 TGS request — ServiceName ends in '$', filtered by 'where NOT match(ServiceName, \"\\$$\")'. Normal Kerberos computer authentication.",
+    "EventCode": "4769", "EventTime": "2026-04-30T14:00:00.000Z", "ComputerName": "DC01.contoso.com",
+    "SubjectUserName": "WORKSTATION01$", "SubjectDomainName": "CONTOSO", "SubjectLogonId": "0x3c4d5e",
+    "ServiceName": "cifs/fileserver.contoso.com", "ServiceSid": "S-1-5-21-1234567890-987654321-111222333-1200",
+    "TicketOptions": "0x40810010", "TicketEncryptionType": "0x17", "Status": "0x0",
+    "IpAddress": "10.2.3.50", "IpPort": "52000",
+    "_note": "Filtered because SubjectUserName ends in $ (machine account)"
+  },
+  {
+    "_comment": "Scenario 2: krbtgt TGS request — ServiceName=krbtgt, filtered by 'where ServiceName != krbtgt'. Normal Kerberos ticket renewal.",
+    "EventCode": "4769", "EventTime": "2026-04-30T14:00:01.000Z", "ComputerName": "DC01.contoso.com",
+    "SubjectUserName": "jdoe", "SubjectDomainName": "CONTOSO", "SubjectLogonId": "0x4d5e6f",
+    "ServiceName": "krbtgt", "ServiceSid": "S-1-5-21-1234567890-987654321-111222333-502",
+    "TicketOptions": "0x40e10000", "TicketEncryptionType": "0x17", "Status": "0x0",
+    "IpAddress": "10.2.3.51", "IpPort": "52001",
+    "_note": "Filtered because ServiceName=krbtgt"
+  },
+  {
+    "_comment": "Scenario 3: AES-encrypted TGS request (TicketEncryptionType=0x12) — not RC4, not targeted by this detection. Normal modern Kerberos.",
+    "EventCode": "4769", "EventTime": "2026-04-30T14:00:02.000Z", "ComputerName": "DC01.contoso.com",
+    "SubjectUserName": "jsmith", "SubjectDomainName": "CONTOSO", "SubjectLogonId": "0x1a2b3c",
+    "ServiceName": "MSSQLSvc/sqlserver01.contoso.com:1433", "ServiceSid": "S-1-5-21-1234567890-987654321-111222333-1105",
+    "TicketOptions": "0x40810000", "TicketEncryptionType": "0x12", "Status": "0x0",
+    "IpAddress": "10.1.2.55", "IpPort": "52002",
+    "_note": "Filtered because TicketEncryptionType=0x12 (AES256), not 0x17"
+  },
+  {
+    "_comment": "Scenario 4: Documented legacy-RC4 service account (in service_accounts.csv with rc4_required=true) — suppressed by lookup. Single request, would be LOW confidence even without suppression.",
+    "EventCode": "4769", "EventTime": "2026-04-30T14:00:03.000Z", "ComputerName": "DC01.contoso.com",
+    "SubjectUserName": "appserver01", "SubjectDomainName": "CONTOSO", "SubjectLogonId": "0x5e6f7a",
+    "ServiceName": "OracleSvc/oradb.contoso.com", "ServiceSid": "S-1-5-21-1234567890-987654321-111222333-1300",
+    "TicketOptions": "0x40810000", "TicketEncryptionType": "0x17", "Status": "0x0",
+    "IpAddress": "10.3.4.60", "IpPort": "52003",
+    "_note": "ServiceName=OracleSvc/oradb.contoso.com is in service_accounts.csv with rc4_required=true — suppressed by lookup"
+  }
+]
