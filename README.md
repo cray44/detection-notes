@@ -26,6 +26,7 @@ _template/       # Blank ADS template to copy for new detections
 | Detection | Technique | Data Source |
 |---|---|---|
 | [DNS Tunneling via High-Entropy Subdomains](detections/network/dns/dns-tunneling-high-entropy-subdomains.md) | T1071.004 | Zeek dns.log |
+| [TLS C2 via JA4 Fingerprint and Certificate Anomalies](detections/network/tls/tls-c2-ja4-certificate-anomalies.md) | T1071.001, T1573.002 | Zeek ssl.log |
 
 ### Identity
 
