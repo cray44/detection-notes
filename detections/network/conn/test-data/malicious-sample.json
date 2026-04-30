@@ -1,0 +1,36 @@
+[
+  {
+    "_comment": "Cobalt Strike-style beacon: 10.1.2.50 -> 203.0.113.42:4444/tcp at ~60s intervals, consistent small payload",
+    "_path": "conn", "ts": 1746000000.123, "uid": "Ca1b2c3d4e5f", "id.orig_h": "10.1.2.50", "id.orig_p": 51001, "id.resp_h": "203.0.113.42", "id.resp_p": 4444, "proto": "tcp", "service": null, "duration": 0.213, "orig_bytes": 184, "resp_bytes": 396, "conn_state": "SF", "missed_bytes": 0, "history": "ShADadfF", "orig_pkts": 4, "orig_ip_bytes": 400, "resp_pkts": 5, "resp_ip_bytes": 576
+  },
+  {
+    "_path": "conn", "ts": 1746000060.089, "uid": "Cb2c3d4e5f6a", "id.orig_h": "10.1.2.50", "id.orig_p": 51002, "id.resp_h": "203.0.113.42", "id.resp_p": 4444, "proto": "tcp", "service": null, "duration": 0.198, "orig_bytes": 184, "resp_bytes": 412, "conn_state": "SF", "missed_bytes": 0, "history": "ShADadfF", "orig_pkts": 4, "orig_ip_bytes": 400, "resp_pkts": 5, "resp_ip_bytes": 592
+  },
+  {
+    "_path": "conn", "ts": 1746000120.201, "uid": "Cc3d4e5f6a7b", "id.orig_h": "10.1.2.50", "id.orig_p": 51003, "id.resp_h": "203.0.113.42", "id.resp_p": 4444, "proto": "tcp", "service": null, "duration": 0.221, "orig_bytes": 184, "resp_bytes": 396, "conn_state": "SF", "missed_bytes": 0, "history": "ShADadfF", "orig_pkts": 4, "orig_ip_bytes": 400, "resp_pkts": 5, "resp_ip_bytes": 576
+  },
+  {
+    "_path": "conn", "ts": 1746000180.077, "uid": "Cd4e5f6a7b8c", "id.orig_h": "10.1.2.50", "id.orig_p": 51004, "id.resp_h": "203.0.113.42", "id.resp_p": 4444, "proto": "tcp", "service": null, "duration": 0.209, "orig_bytes": 184, "resp_bytes": 408, "conn_state": "SF", "missed_bytes": 0, "history": "ShADadfF", "orig_pkts": 4, "orig_ip_bytes": 400, "resp_pkts": 5, "resp_ip_bytes": 588
+  },
+  {
+    "_path": "conn", "ts": 1746000240.145, "uid": "Ce5f6a7b8c9d", "id.orig_h": "10.1.2.50", "id.orig_p": 51005, "id.resp_h": "203.0.113.42", "id.resp_p": 4444, "proto": "tcp", "service": null, "duration": 0.191, "orig_bytes": 184, "resp_bytes": 396, "conn_state": "SF", "missed_bytes": 0, "history": "ShADadfF", "orig_pkts": 4, "orig_ip_bytes": 400, "resp_pkts": 5, "resp_ip_bytes": 576
+  },
+  {
+    "_path": "conn", "ts": 1746000300.102, "uid": "Cf6a7b8c9d0e", "id.orig_h": "10.1.2.50", "id.orig_p": 51006, "id.resp_h": "203.0.113.42", "id.resp_p": 4444, "proto": "tcp", "service": null, "duration": 0.205, "orig_bytes": 184, "resp_bytes": 404, "conn_state": "SF", "missed_bytes": 0, "history": "ShADadfF", "orig_pkts": 4, "orig_ip_bytes": 400, "resp_pkts": 5, "resp_ip_bytes": 584
+  },
+  {
+    "_path": "conn", "ts": 1746000360.118, "uid": "Ca7b8c9d0e1f", "id.orig_h": "10.1.2.50", "id.orig_p": 51007, "id.resp_h": "203.0.113.42", "id.resp_p": 4444, "proto": "tcp", "service": null, "duration": 0.217, "orig_bytes": 184, "resp_bytes": 396, "conn_state": "SF", "missed_bytes": 0, "history": "ShADadfF", "orig_pkts": 4, "orig_ip_bytes": 400, "resp_pkts": 5, "resp_ip_bytes": 576
+  },
+  {
+    "_path": "conn", "ts": 1746000420.091, "uid": "Cb8c9d0e1f2a", "id.orig_h": "10.1.2.50", "id.orig_p": 51008, "id.resp_h": "203.0.113.42", "id.resp_p": 4444, "proto": "tcp", "service": null, "duration": 0.203, "orig_bytes": 184, "resp_bytes": 412, "conn_state": "SF", "missed_bytes": 0, "history": "ShADadfF", "orig_pkts": 4, "orig_ip_bytes": 400, "resp_pkts": 5, "resp_ip_bytes": 592
+  },
+  {
+    "_path": "conn", "ts": 1746000480.134, "uid": "Cc9d0e1f2a3b", "id.orig_h": "10.1.2.50", "id.orig_p": 51009, "id.resp_h": "203.0.113.42", "id.resp_p": 4444, "proto": "tcp", "service": null, "duration": 0.199, "orig_bytes": 184, "resp_bytes": 396, "conn_state": "SF", "missed_bytes": 0, "history": "ShADadfF", "orig_pkts": 4, "orig_ip_bytes": 400, "resp_pkts": 5, "resp_ip_bytes": 576
+  },
+  {
+    "_path": "conn", "ts": 1746000540.088, "uid": "Cd0e1f2a3b4c", "id.orig_h": "10.1.2.50", "id.orig_p": 51010, "id.resp_h": "203.0.113.42", "id.resp_p": 4444, "proto": "tcp", "service": null, "duration": 0.211, "orig_bytes": 184, "resp_bytes": 408, "conn_state": "SF", "missed_bytes": 0, "history": "ShADadfF", "orig_pkts": 4, "orig_ip_bytes": 400, "resp_pkts": 5, "resp_ip_bytes": 588
+  },
+  {
+    "_comment": "Inter-arrival stats for above: intervals=[59.966, 60.112, 59.876, 60.068, 59.957, 60.016, 59.973, 60.043, 59.954], mean=59.996s, stddev=0.073s, CoV(jitter)=0.001 -> beacon_confidence=HIGH"
+  }
+]
