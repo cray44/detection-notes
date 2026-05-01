@@ -1,35 +1,35 @@
 [
   {
     "_comment": "Rubeus kerberoast run — jsmith requests RC4 TGS for 5 user-class SPNs in 8 seconds. request_count=5, unique_spns=5 -> confidence=HIGH",
-    "EventCode": "4769", "EventTime": "2026-04-30T14:00:00.000Z", "ComputerName": "DC01.contoso.com",
+    "EventID": "4769", "EventTime": "2026-04-30T14:00:00.000Z", "ComputerName": "DC01.contoso.com",
     "SubjectUserName": "jsmith", "SubjectDomainName": "CONTOSO", "SubjectLogonId": "0x1a2b3c",
     "ServiceName": "MSSQLSvc/sqlserver01.contoso.com:1433", "ServiceSid": "S-1-5-21-1234567890-987654321-111222333-1105",
     "TicketOptions": "0x40810000", "TicketEncryptionType": "0x17", "Status": "0x0",
     "IpAddress": "10.1.2.50", "IpPort": "51000"
   },
   {
-    "EventCode": "4769", "EventTime": "2026-04-30T14:00:01.500Z", "ComputerName": "DC01.contoso.com",
+    "EventID": "4769", "EventTime": "2026-04-30T14:00:01.500Z", "ComputerName": "DC01.contoso.com",
     "SubjectUserName": "jsmith", "SubjectDomainName": "CONTOSO", "SubjectLogonId": "0x1a2b3c",
     "ServiceName": "HTTP/intranet.contoso.com", "ServiceSid": "S-1-5-21-1234567890-987654321-111222333-1106",
     "TicketOptions": "0x40810000", "TicketEncryptionType": "0x17", "Status": "0x0",
     "IpAddress": "10.1.2.50", "IpPort": "51001"
   },
   {
-    "EventCode": "4769", "EventTime": "2026-04-30T14:00:03.100Z", "ComputerName": "DC01.contoso.com",
+    "EventID": "4769", "EventTime": "2026-04-30T14:00:03.100Z", "ComputerName": "DC01.contoso.com",
     "SubjectUserName": "jsmith", "SubjectDomainName": "CONTOSO", "SubjectLogonId": "0x1a2b3c",
     "ServiceName": "MSSQLSvc/sqlserver02.contoso.com:1433", "ServiceSid": "S-1-5-21-1234567890-987654321-111222333-1107",
     "TicketOptions": "0x40810000", "TicketEncryptionType": "0x17", "Status": "0x0",
     "IpAddress": "10.1.2.50", "IpPort": "51002"
   },
   {
-    "EventCode": "4769", "EventTime": "2026-04-30T14:00:04.800Z", "ComputerName": "DC01.contoso.com",
+    "EventID": "4769", "EventTime": "2026-04-30T14:00:04.800Z", "ComputerName": "DC01.contoso.com",
     "SubjectUserName": "jsmith", "SubjectDomainName": "CONTOSO", "SubjectLogonId": "0x1a2b3c",
     "ServiceName": "TERMSRV/rdpserver.contoso.com", "ServiceSid": "S-1-5-21-1234567890-987654321-111222333-1108",
     "TicketOptions": "0x40810000", "TicketEncryptionType": "0x17", "Status": "0x0",
     "IpAddress": "10.1.2.50", "IpPort": "51003"
   },
   {
-    "EventCode": "4769", "EventTime": "2026-04-30T14:00:06.200Z", "ComputerName": "DC02.contoso.com",
+    "EventID": "4769", "EventTime": "2026-04-30T14:00:06.200Z", "ComputerName": "DC02.contoso.com",
     "SubjectUserName": "jsmith", "SubjectDomainName": "CONTOSO", "SubjectLogonId": "0x1a2b3c",
     "ServiceName": "cifs/fileserver.contoso.com", "ServiceSid": "S-1-5-21-1234567890-987654321-111222333-1109",
     "TicketOptions": "0x40810000", "TicketEncryptionType": "0x17", "Status": "0x0",

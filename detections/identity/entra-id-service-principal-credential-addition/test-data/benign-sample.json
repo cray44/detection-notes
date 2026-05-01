@@ -1,6 +1,6 @@
 [
   {
-    "_comment": "Automated DevOps pipeline rotating SP credentials — initiatedBy.app present (no user), known CI/CD service identity",
+    "_comment": "Automated DevOps pipeline rotating SP credentials \u00e2\u20ac\u201d initiatedBy.app present (no user), known CI/CD service identity",
     "time": "2026-04-30T03:00:12.100Z",
     "operationName": "Add service principal credentials",
     "category": "AuditLogs",
@@ -16,6 +16,9 @@
           "displayName": "Contoso-KeyRotation-Pipeline",
           "servicePrincipalId": "55554444-3333-2222-1111-000099998888",
           "servicePrincipalName": "Contoso-KeyRotation-Pipeline"
+        },
+        "user": {
+          "userPrincipalName": ""
         }
       },
       "targetResources": [
@@ -41,7 +44,7 @@
     }
   },
   {
-    "_comment": "Azure Key Vault automated rotation — initiatedBy.app is Azure Key Vault service, consistent scheduled pattern",
+    "_comment": "Azure Key Vault automated rotation \u00e2\u20ac\u201d initiatedBy.app is Azure Key Vault service, consistent scheduled pattern",
     "time": "2026-04-30T06:00:00.882Z",
     "operationName": "Add service principal credentials",
     "category": "AuditLogs",
@@ -57,6 +60,9 @@
           "displayName": "Azure Key Vault",
           "servicePrincipalId": "ffffffff-eeee-dddd-cccc-bbbbaaaaffff",
           "servicePrincipalName": "Azure Key Vault"
+        },
+        "user": {
+          "userPrincipalName": ""
         }
       },
       "targetResources": [
@@ -82,7 +88,7 @@
     }
   },
   {
-    "_comment": "IT admin manually rotating a known-compromised SP secret during business hours — UPN is a known admin, not an attacker",
+    "_comment": "IT admin manually rotating a known-compromised SP secret during business hours \u00e2\u20ac\u201d UPN is a known admin, not an attacker",
     "time": "2026-04-30T10:30:44.210Z",
     "operationName": "Add service principal credentials",
     "category": "AuditLogs",

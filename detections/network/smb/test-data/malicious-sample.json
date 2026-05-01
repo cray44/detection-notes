@@ -1,25 +1,58 @@
 [
   {
-    "_comment": "Scenario 1: PsExec-style lateral movement — 10.1.2.50 maps ADMIN$ on 5 unique internal targets in rapid succession. unique_targets=5 -> risk_score=80 (base +40, spread +40), lateral_spread=MEDIUM",
-    "_path": "smb_mapping", "ts": 1746100000.000, "uid": "Sa1b2c3d4e5f", "id.orig_h": "10.1.2.50", "id.orig_p": 49800, "id.resp_h": "10.1.2.100", "id.resp_p": 445, "path": "\\\\10.1.2.100\\ADMIN$", "share_type": "DISK"
+    "_comment": "Scenario 1: PsExec-style lateral movement \u00e2\u20ac\u201d 10.1.2.50 maps ADMIN$ on 5 unique internal targets in rapid succession. unique_targets=5 -> risk_score=80 (base +40, spread +40), lateral_spread=MEDIUM",
+    "_path": "smb_mapping",
+    "ts": 1746100000.0,
+    "uid": "Sa1b2c3d4e5f",
+    "id.orig_h": "10.1.2.50",
+    "id.orig_p": 49800,
+    "id.resp_h": "10.1.2.100",
+    "id.resp_p": 445,
+    "path": "\\\\10.1.2.100\\ADMIN$",
+    "share_type": "DISK"
   },
   {
-    "_path": "smb_mapping", "ts": 1746100005.000, "uid": "Sb2c3d4e5f6a", "id.orig_h": "10.1.2.50", "id.orig_p": 49801, "id.resp_h": "10.1.2.101", "id.resp_p": 445, "path": "\\\\10.1.2.101\\ADMIN$", "share_type": "DISK"
+    "_path": "smb_mapping",
+    "ts": 1746100005.0,
+    "uid": "Sb2c3d4e5f6a",
+    "id.orig_h": "10.1.2.50",
+    "id.orig_p": 49801,
+    "id.resp_h": "10.1.2.101",
+    "id.resp_p": 445,
+    "path": "\\\\10.1.2.101\\ADMIN$",
+    "share_type": "DISK"
   },
   {
-    "_path": "smb_mapping", "ts": 1746100010.000, "uid": "Sc3d4e5f6a7b", "id.orig_h": "10.1.2.50", "id.orig_p": 49802, "id.resp_h": "10.1.2.102", "id.resp_p": 445, "path": "\\\\10.1.2.102\\C$", "share_type": "DISK"
+    "_path": "smb_mapping",
+    "ts": 1746100010.0,
+    "uid": "Sc3d4e5f6a7b",
+    "id.orig_h": "10.1.2.50",
+    "id.orig_p": 49802,
+    "id.resp_h": "10.1.2.102",
+    "id.resp_p": 445,
+    "path": "\\\\10.1.2.102\\C$",
+    "share_type": "DISK"
   },
   {
-    "_path": "smb_mapping", "ts": 1746100015.000, "uid": "Sd4e5f6a7b8c", "id.orig_h": "10.1.2.50", "id.orig_p": 49803, "id.resp_h": "10.1.2.103", "id.resp_p": 445, "path": "\\\\10.1.2.103\\ADMIN$", "share_type": "DISK"
+    "_path": "smb_mapping",
+    "ts": 1746100015.0,
+    "uid": "Sd4e5f6a7b8c",
+    "id.orig_h": "10.1.2.50",
+    "id.orig_p": 49803,
+    "id.resp_h": "10.1.2.103",
+    "id.resp_p": 445,
+    "path": "\\\\10.1.2.103\\ADMIN$",
+    "share_type": "DISK"
   },
   {
-    "_path": "smb_mapping", "ts": 1746100020.000, "uid": "Se5f6a7b8c9d", "id.orig_h": "10.1.2.50", "id.orig_p": 49804, "id.resp_h": "10.1.2.104", "id.resp_p": 445, "path": "\\\\10.1.2.104\\C$", "share_type": "DISK"
-  },
-  {
-    "_comment": "Scenario 2: smb_files enrichment — executable written to ADMIN$ on first target (PsExec service binary drop). Correlates with smb_mapping uid Sa1b2c3d4e5f via id.orig_h/id.resp_h",
-    "_path": "smb_files", "ts": 1746100001.200, "uid": "Sa1b2c3d4e5f", "id.orig_h": "10.1.2.50", "id.orig_p": 49800, "id.resp_h": "10.1.2.100", "id.resp_p": 445, "action": "SMB_FILES_CREATE", "path": "\\", "name": "PSEXESVC.EXE", "size": 145408, "times.created": 1746100001.0, "times.modified": 1746100001.0
-  },
-  {
-    "_path": "smb_files", "ts": 1746100001.800, "uid": "Sa1b2c3d4e5f", "id.orig_h": "10.1.2.50", "id.orig_p": 49800, "id.resp_h": "10.1.2.100", "id.resp_p": 445, "action": "SMB_FILES_WRITE", "path": "\\", "name": "PSEXESVC.EXE", "size": 145408, "times.created": 1746100001.0, "times.modified": 1746100001.8
+    "_path": "smb_mapping",
+    "ts": 1746100020.0,
+    "uid": "Se5f6a7b8c9d",
+    "id.orig_h": "10.1.2.50",
+    "id.orig_p": 49804,
+    "id.resp_h": "10.1.2.104",
+    "id.resp_p": 445,
+    "path": "\\\\10.1.2.104\\C$",
+    "share_type": "DISK"
   }
 ]
