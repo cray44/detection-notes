@@ -163,6 +163,34 @@ index=azure sourcetype="azure:aad:signin"
 
 > *Performance note:* `AuthenticationProtocol` and `ResultType` filter first to reduce volume before any `eval`. The `match()` call on `UserAgent` is applied to an already-small result set. This search is safe to run over 24h without acceleration.
 
+**KQL (community-translated, untested — Microsoft Sentinel `SigninLogs`):**
+
+```kql
+SigninLogs
+| where AuthenticationProtocol == "deviceCode"
+| where ResultType == 0
+| extend IsBrowserUA   = UserAgent matches regex @"(?i)(mozilla|chrome|safari|firefox|edge|msie|webkit)"
+| extend IsCompliant   = tostring(DeviceDetail.isCompliant) == "True"
+| extend HasDeviceId   = isnotempty(tostring(DeviceDetail.deviceId))
+| extend RiskLevel = case(
+    IsBrowserUA,                          "HIGH",
+    not IsCompliant and not HasDeviceId,  "HIGH",
+    not IsCompliant,                      "MEDIUM",
+    "LOW")
+| where RiskLevel in ("HIGH", "MEDIUM")
+| summarize
+    AuthCount  = count(),
+    SourceIps  = make_set(IPAddress),
+    Cities     = make_set(tostring(LocationDetails.city)),
+    Countries  = make_set(tostring(LocationDetails.countryOrRegion)),
+    Apps       = make_set(AppDisplayName),
+    UserAgents = make_set(UserAgent),
+    RiskLevels = make_set(RiskLevel),
+    LastSeen   = max(TimeGenerated)
+    by UserDisplayName, UserPrincipalName
+| sort by AuthCount desc
+```
+
 ## Response
 
 1. **Confirm or deny phishing** — contact the user directly via phone or a separate channel (not Teams/email, which may be compromised). Ask if they entered a code at `microsoft.com/devicelogin` in the past 24 hours without initiating it themselves.

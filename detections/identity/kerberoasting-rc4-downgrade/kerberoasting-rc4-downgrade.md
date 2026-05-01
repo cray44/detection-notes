@@ -149,6 +149,33 @@ index=windows (sourcetype="WinEventLog:Security" OR sourcetype="XmlWinEventLog:S
 
 > *Performance note:* The `TicketEncryptionType IN (...)` filter includes both hex string and decimal representations because the Splunk Add-on for Windows normalizes this field inconsistently across versions — include all forms defensively. The `service_accounts.csv` suppression lookup runs before `stats`, filtering documented RC4-required accounts before aggregation. The `dcs_queried` field in output is a diagnostic: if only one DC appears for a large request_count, it may indicate sensor coverage gaps on other DCs.
 
+**KQL (community-translated, untested — Microsoft Sentinel `SecurityEvent`):**
+
+```kql
+SecurityEvent
+| where EventID == 4769
+| where Status == "0x0"
+| where TicketEncryptionType in ("0x17", "0x18", "23", "24")
+| where ServiceName !endswith "$"
+| where ServiceName !in ("krbtgt")
+| where IpAddress !in ("::1", "127.0.0.1", "")
+| summarize
+    RequestCount    = count(),
+    UniqueSpns      = dcount(ServiceName),
+    SpnsTargeted    = make_set(ServiceName),
+    SourceIps       = make_set(IpAddress),
+    DcsQueried      = make_set(Computer),
+    FirstSeen       = min(TimeGenerated),
+    LastSeen        = max(TimeGenerated)
+    by SubjectUserName, SubjectDomainName
+| extend Confidence = case(
+    RequestCount >= 10 or UniqueSpns >= 5, "HIGH",
+    RequestCount >= 3  or UniqueSpns >= 2, "MEDIUM",
+    "LOW")
+| where Confidence in ("HIGH", "MEDIUM")
+| sort by RequestCount desc
+```
+
 ## Response
 
 1. **Identify the requesting user and source IP** (`SubjectUserName`, `source_ips`) — determine whether the user account is a human interactive account or a service account. An interactive user account making TGS requests for other services is the primary indicator of credential compromise.

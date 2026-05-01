@@ -177,6 +177,41 @@ index=endpoint sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" 
 
 > *Performance note:* `EventID=10` and `TargetImage="*\\lsass.exe"` at the top are the critical volume reducers — they must appear before any `eval`. The `lookup` against `lsass_allowlist.csv` suppresses the majority of remaining events (AV/EDR agents). `CallTrace` analysis runs only on what survives both filters. Do not move the allowlist lookup after the `eval risk_score` block.
 
+**KQL (community-translated, untested — Microsoft Defender for Endpoint `DeviceEvents`):**
+
+```kql
+DeviceEvents
+| where ActionType == "ProcessAccess"
+| where FileName =~ "lsass.exe"
+| extend GrantedAccess = tolower(tostring(parse_json(AdditionalFields).GrantedAccess))
+| extend CallTrace = tostring(parse_json(AdditionalFields).CallTrace)
+| where GrantedAccess in ("0x1010", "0x1038", "0x1f1fff", "0x1fffff", "0x143a", "0x0040", "0x0010")
+| where not (InitiatingProcessFolderPath has_any (
+    "MsMpEng.exe", "SentinelAgent.exe", "csagent.exe", "cbsensor.exe",
+    "csfalconservice.exe", "carbonblack", "cylanceprotect"))
+| extend DumpType = case(
+    GrantedAccess == "0x1010",   "mimikatz_default",
+    GrantedAccess == "0x1038",   "mimikatz_extended",
+    GrantedAccess == "0x1f1fff", "procdump_full",
+    GrantedAccess == "0x1fffff", "process_all_access",
+    GrantedAccess == "0x143a",   "inject_then_read",
+    "vm_read")
+| extend HasUnknownModule = CallTrace matches regex @"[0-9A-Fa-f]{8,16}\|UNKNOWN"
+| extend RiskScore = case(
+    GrantedAccess == "0x1fffff",                        100,
+    GrantedAccess == "0x143a",                           90,
+    GrantedAccess == "0x1f1fff" and HasUnknownModule,    90,
+    GrantedAccess in ("0x1010", "0x1038"),                85,
+    GrantedAccess == "0x1f1fff",                          70,
+    50)
+| project
+    Timestamp, DeviceName,
+    InitiatingProcessFileName, InitiatingProcessFolderPath,
+    InitiatingProcessCommandLine, InitiatingProcessAccountName,
+    GrantedAccess, DumpType, HasUnknownModule, CallTrace, RiskScore
+| sort by RiskScore desc
+```
+
 ## Response
 
 1. **Identify the source process** — `SourceImage` and `SourceProcessId` tell you what binary opened the handle. Is it a known tool (`mimikatz.exe`, `procdump.exe`, `rundll32.exe`)? Check the process creation event (Sysmon Event 1) for the same PID to see command-line arguments and parent process.
