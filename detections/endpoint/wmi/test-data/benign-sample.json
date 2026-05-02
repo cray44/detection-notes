@@ -1,0 +1,50 @@
+[
+  {
+    "_comment": "Benign: SCCM client agent WMI consumer — legitimate management tooling, known-good binary path, no suspicious flags",
+    "sourcetype": "XmlWinEventLog:Microsoft-Windows-Sysmon/Operational",
+    "index": "endpoint",
+    "EventID": "20",
+    "UtcTime": "2026-05-01T08:11:22.334Z",
+    "RuleName": "-",
+    "EventType": "WmiEventConsumer",
+    "Operation": "Created",
+    "User": "NT AUTHORITY\\SYSTEM",
+    "Name": "SCCM Event Consumer",
+    "Type": "CommandLineEventConsumer",
+    "Destination": "C:\\Windows\\CCM\\CcmExec.exe",
+    "ComputerName": "DESKTOP-B3C4D5.corp.local",
+    "_note": "Legitimate SCCM consumer. Name contains no suspicious string but Destination is a known SCCM binary path. No encode/b64/lolbin/suspect_path flags. risk_score=50, confidence=LOW. Add to wmi_consumer_allowlist.csv."
+  },
+  {
+    "_comment": "Benign: HP System Management Homepage WMI consumer — OEM hardware monitoring, known vendor path",
+    "sourcetype": "XmlWinEventLog:Microsoft-Windows-Sysmon/Operational",
+    "index": "endpoint",
+    "EventID": "20",
+    "UtcTime": "2026-05-01T09:03:55.661Z",
+    "RuleName": "-",
+    "EventType": "WmiEventConsumer",
+    "Operation": "Created",
+    "User": "NT AUTHORITY\\SYSTEM",
+    "Name": "HP SMH Monitor Consumer",
+    "Type": "CommandLineEventConsumer",
+    "Destination": "C:\\Program Files\\HP\\HP System Management Homepage\\bin\\cpqHpSmhDaemon.exe --event",
+    "ComputerName": "SRV-HPE-GEN10.corp.local",
+    "_note": "HP iLO / SMH management consumer. Destination is a known HP vendor path under Program Files. No suspicious indicators. risk_score=50, confidence=LOW. Add vendor path to wmi_consumer_allowlist.csv."
+  },
+  {
+    "_comment": "Benign: Windows built-in SCM Event Log Consumer — native OS consumer, filtered by filter_known_good in Sigma rule",
+    "sourcetype": "XmlWinEventLog:Microsoft-Windows-Sysmon/Operational",
+    "index": "endpoint",
+    "EventID": "20",
+    "UtcTime": "2026-05-01T07:00:01.007Z",
+    "RuleName": "-",
+    "EventType": "WmiEventConsumer",
+    "Operation": "Created",
+    "User": "NT AUTHORITY\\SYSTEM",
+    "Name": "SCM Event Log Consumer",
+    "Type": "CommandLineEventConsumer",
+    "Destination": "C:\\Windows\\System32\\scrcons.exe",
+    "ComputerName": "SRV-FILE02.corp.local",
+    "_note": "Native Windows SCM Event Log Consumer. Name='SCM Event Log Consumer' matches filter_known_good in Sigma rule — suppressed before detection fires. This should NOT generate an alert."
+  }
+]
