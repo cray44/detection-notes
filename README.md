@@ -79,6 +79,7 @@ Upstream PRs submitted from this detection research:
 |---|---|---|---|
 | [#5975](https://github.com/SigmaHQ/sigma/pull/5975) | SigmaHQ/sigma | Device code phishing from non-compliant device (`azure_app_device_code_auth_non_compliant.yml`) | Open |
 | [#5981](https://github.com/SigmaHQ/sigma/pull/5981) | SigmaHQ/sigma | Improve `aws_snapshot_backup_exfiltration`: scope to `createVolumePermission`, SCARLETEEL ref, FP triage | Open |
+| [#5982](https://github.com/SigmaHQ/sigma/pull/5982) | SigmaHQ/sigma | Add correlation rules: MFA fatigue (T1621), Azure impossible travel→AWS login (T1078), LSASS→AssumeRole (T1003.001) | Open |
 
 ---
 
