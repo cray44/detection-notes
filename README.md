@@ -78,6 +78,7 @@ Upstream PRs submitted from this detection research:
 | PR | Repo | Description | Status |
 |---|---|---|---|
 | [#5975](https://github.com/SigmaHQ/sigma/pull/5975) | SigmaHQ/sigma | Device code phishing from non-compliant device (`azure_app_device_code_auth_non_compliant.yml`) | Open |
+| [#5981](https://github.com/SigmaHQ/sigma/pull/5981) | SigmaHQ/sigma | Improve `aws_snapshot_backup_exfiltration`: scope to `createVolumePermission`, SCARLETEEL ref, FP triage | Open |
 
 ---
 
