@@ -1,0 +1,80 @@
+[
+  {
+    "_comment": "AWS Backup cross-account sharing to known DR account (444455556666 in trusted_aws_accounts.csv)",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "AssumedRole",
+      "principalId": "AROAEXAMPLEBACKUP:AWSBackupSession",
+      "arn": "arn:aws:sts::111122223333:assumed-role/AWSBackupDefaultServiceRole/AWSBackupSession",
+      "accountId": "111122223333",
+      "sessionContext": {
+        "sessionIssuer": {
+          "type": "Role",
+          "arn": "arn:aws:iam::111122223333:role/AWSBackupDefaultServiceRole"
+        }
+      }
+    },
+    "eventTime": "2026-05-02T02:00:05Z",
+    "eventSource": "ec2.amazonaws.com",
+    "eventName": "ModifySnapshotAttribute",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "AWS Internal",
+    "userAgent": "aws-backup.amazonaws.com",
+    "requestParameters": {
+      "snapshotId": "snap-0benign1234567890",
+      "attributeType": "createVolumePermission",
+      "createVolumePermission": {
+        "add": {
+          "items": [
+            {"userId": "444455556666"}
+          ]
+        }
+      }
+    },
+    "responseElements": {
+      "_return": true
+    },
+    "requestID": "e5f6a7b8-c9d0-1234-efab-345678901234",
+    "eventID": "f6a7b8c9-d0e1-2345-fabc-456789012345",
+    "readOnly": false,
+    "eventType": "AwsApiCall",
+    "managementEvent": true,
+    "recipientAccountId": "111122223333"
+  },
+  {
+    "_comment": "Snapshot attribute modification for productCodes — not a permission share, unrelated to exfil",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "arn": "arn:aws:iam::111122223333:user/ami-admin",
+      "accountId": "111122223333",
+      "userName": "ami-admin"
+    },
+    "eventTime": "2026-05-02T10:32:11Z",
+    "eventSource": "ec2.amazonaws.com",
+    "eventName": "ModifySnapshotAttribute",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.50",
+    "userAgent": "aws-cli/2.13.0",
+    "requestParameters": {
+      "snapshotId": "snap-0productcode987654",
+      "attributeType": "productCodes",
+      "productCode": {
+        "add": {
+          "items": [
+            {"productCode": "abc123defghijklmno456"}
+          ]
+        }
+      }
+    },
+    "responseElements": {
+      "_return": true
+    },
+    "requestID": "a7b8c9d0-e1f2-3456-abcd-567890123456",
+    "eventID": "b8c9d0e1-f2a3-4567-bcde-678901234567",
+    "readOnly": false,
+    "eventType": "AwsApiCall",
+    "managementEvent": true,
+    "recipientAccountId": "111122223333"
+  }
+]

@@ -1,0 +1,78 @@
+[
+  {
+    "_comment": "Attacker shares snapshot to external account from off-hours, non-corporate IP using CLI",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "principalId": "AIDAEXAMPLECOMPROMISED1",
+      "arn": "arn:aws:iam::111122223333:user/compromised-dev",
+      "accountId": "111122223333",
+      "accessKeyId": "AKIAIOSFODNN7EXAMPLE",
+      "userName": "compromised-dev"
+    },
+    "eventTime": "2026-05-02T03:14:22Z",
+    "eventSource": "ec2.amazonaws.com",
+    "eventName": "ModifySnapshotAttribute",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "185.220.101.47",
+    "userAgent": "aws-cli/2.13.0 Python/3.11.4 Linux/5.15.0",
+    "requestParameters": {
+      "snapshotId": "snap-0a1b2c3d4e5f67890",
+      "attributeType": "createVolumePermission",
+      "createVolumePermission": {
+        "add": {
+          "items": [
+            {"userId": "999988887777"}
+          ]
+        }
+      }
+    },
+    "responseElements": {
+      "_return": true
+    },
+    "requestID": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "eventID": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+    "readOnly": false,
+    "eventType": "AwsApiCall",
+    "managementEvent": true,
+    "recipientAccountId": "111122223333"
+  },
+  {
+    "_comment": "Bulk snapshot enumeration + sharing — attacker iterates through volume snapshots",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "principalId": "AIDAEXAMPLECOMPROMISED1",
+      "arn": "arn:aws:iam::111122223333:user/compromised-dev",
+      "accountId": "111122223333",
+      "accessKeyId": "AKIAIOSFODNN7EXAMPLE",
+      "userName": "compromised-dev"
+    },
+    "eventTime": "2026-05-02T03:14:35Z",
+    "eventSource": "ec2.amazonaws.com",
+    "eventName": "ModifySnapshotAttribute",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "185.220.101.47",
+    "userAgent": "aws-cli/2.13.0 Python/3.11.4 Linux/5.15.0",
+    "requestParameters": {
+      "snapshotId": "snap-0b2c3d4e5f6789012",
+      "attributeType": "createVolumePermission",
+      "createVolumePermission": {
+        "add": {
+          "items": [
+            {"userId": "999988887777"}
+          ]
+        }
+      }
+    },
+    "responseElements": {
+      "_return": true
+    },
+    "requestID": "c3d4e5f6-a7b8-9012-cdef-123456789012",
+    "eventID": "d4e5f6a7-b8c9-0123-defa-234567890123",
+    "readOnly": false,
+    "eventType": "AwsApiCall",
+    "managementEvent": true,
+    "recipientAccountId": "111122223333"
+  }
+]
