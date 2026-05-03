@@ -47,12 +47,48 @@ Sigma rules are maintained as the portable source of truth in [sigma-to-spl](htt
 |---|---|---|---|
 | [AWS IAM Privilege Escalation via Policy Attachment](detections/cloud/aws-iam/aws-iam-privilege-escalation-policy-attachment.md) | T1078.004, T1098 | Scattered Spider / LAPSUS$ | AWS CloudTrail |
 | [Azure Illicit OAuth App Consent Grant](detections/cloud/azure-oauth/azure-illicit-oauth-consent-grant.md) | T1528 | APT29 / Midnight Blizzard | Entra ID Audit Logs |
+| [AWS EC2 Snapshot Exfiltration via Cross-Account Sharing](detections/cloud/aws-ec2/aws-ec2-snapshot-exfiltration.md) | T1537 | SCARLETEEL | AWS CloudTrail |
 
 ### Endpoint
 
 | Detection | Technique | Threat Actor | Data Source |
 |---|---|---|---|
 | [LSASS Process Access for Credential Dumping](detections/endpoint/lsass/lsass-process-access-credential-dumping.md) | T1003.001 | ALPHV / Scattered Spider | Sysmon Event ID 10 |
+| [WMI Event Subscription Persistence](detections/endpoint/wmi/wmi-event-subscription-persistence.md) | T1546.003 | APT29 / FIN7 / eCrime | Sysmon Event ID 20/21 |
+
+---
+
+## Hunting playbooks
+
+Hypothesis-driven hunts in [PEAK framework](https://www.splunk.com/en_us/blog/security/peak-hypothesis-driven-threat-hunting.html) format — scoped queries with structured analysis approach, not standing alerts.
+
+| Hunt | Technique | Data Source |
+|---|---|---|
+| [Zeek Statistical Beaconing](hunts/network/zeek-beaconing-hunt.md) | T1071 | Zeek conn.log |
+| [DNS Tunneling via Zeek dns.log](hunts/network/dns-tunneling-hunt.md) | T1071.004 | Zeek dns.log |
+| [Entra ID OAuth Abuse / Persistent Access](hunts/identity/entra-id-oauth-abuse-hunt.md) | T1528 | Entra ID Audit + Sign-in Logs |
+| [Kerberoasting / AS-REP Roasting](hunts/identity/kerberoasting-hunt.md) | T1558.003, T1558.004 | Windows Event 4769 + Zeek kerberos.log |
+
+---
+
+## External contributions
+
+Upstream PRs submitted from this detection research:
+
+| PR | Repo | Description | Status |
+|---|---|---|---|
+| [#5975](https://github.com/SigmaHQ/sigma/pull/5975) | SigmaHQ/sigma | Device code phishing from non-compliant device (`azure_app_device_code_auth_non_compliant.yml`) | Open |
+
+---
+
+## Related tools
+
+| Repo | Role |
+|---|---|
+| [sigma-to-spl](https://github.com/cray44/sigma-to-spl) | Sigma rules (source of truth) + pySigma Splunk converter with Corelight/Zeek field mapping |
+| [detection-validator](https://github.com/cray44/detection-validator) | Validates Sigma rules against JSON test samples — no Splunk required |
+| [spl-coverage-map](https://github.com/cray44/spl-coverage-map) | Generates ATT&CK Navigator layers from Sigma rule directories |
+| [detection-workbench](https://github.com/cray44/detection-workbench) | Detection lifecycle manager — hypothesis capture, sigma-to-spl integration, Claude-assisted critique |
 
 ---
 
