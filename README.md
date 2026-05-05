@@ -22,6 +22,53 @@ Sigma rules are maintained as the portable source of truth in [sigma-to-spl](htt
 
 ---
 
+## Data flow
+
+```mermaid
+flowchart LR
+    subgraph net["Network Layer"]
+        zeek["Zeek / Corelight\ndns.log · ssl.log\nconn.log · smb_mapping.log\nkerberos.log"]
+        suricata["Suricata\nalerts"]
+    end
+
+    subgraph ep["Endpoint"]
+        sysmon["Sysmon\nEvent 10 · 20 · 21"]
+    end
+
+    subgraph cloud_src["Cloud APIs"]
+        ct["AWS CloudTrail"]
+        eid["Entra ID\nAudit · Sign-in"]
+    end
+
+    subgraph ingest["Log Transport"]
+        uf["Splunk UF / HEC"]
+    end
+
+    subgraph splunk["Splunk"]
+        idx["Indexers"]
+        sh["Search Heads"]
+    end
+
+    subgraph det["Detection Layer"]
+        sigma["Sigma Rules\nsigma-to-spl"]
+        spl["SPL Saved Searches"]
+        alert["Alerts"]
+    end
+
+    zeek --> uf
+    suricata --> uf
+    sysmon --> uf
+    ct --> uf
+    eid --> uf
+    uf --> idx
+    idx --> sh
+    sigma -- "convert" --> spl
+    sh --> spl
+    spl --> alert
+```
+
+---
+
 ## Detections
 
 ### Network
